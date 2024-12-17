@@ -1,0 +1,273 @@
+import { Image, StyleSheet,TouchableOpacity,Alert, Text, TextInput, View } from 'react-native'
+import React from 'react'
+import { Formik } from 'formik'
+import { LoginInitialValue, LoginValidationSchema } from './utils'
+ function Login() {
+  const handleLogin = () => {
+    console.log("Values");s
+  }
+  return (
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <Image
+        style={styles.imagebody}
+        source={require("../../src/assets/Instagram 1 Logo Png Transparent - Instagram Name Logo Png, Png Download(2400x806) - PngFind.jpg")}
+       />
+       <Formik initialValues={LoginInitialValue} validationSchema={LoginValidationSchema} onSubmit={handleLogin}>
+        {({
+        
+        })=>{
+          return(
+            <View>
+                 <TouchableOpacity>
+                 <Text style={styles.forgot}>forgot password ?</Text>  
+                 </TouchableOpacity>     
+            </View>
+          )
+        }}
+       </Formik>
+      </View>
+      <View style={styles.signupbox}>
+        <Text>don't have an account?
+          <TouchableOpacity>
+             <Text style={styles.signup}> signup</Text>
+          </TouchableOpacity>
+           </Text>
+      </View>
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  card:{
+  flex:0.8,
+  justifyContent:'center',
+  },
+  container:{
+    flex:1,
+    alignItems:'center',
+  },
+  imagebody:{
+    height:100,
+    width:350,
+  },
+  signupbox:{
+    flex:0.2,
+    marginBottom:10,
+  },
+  Text:{
+    color:'white',
+    fontWeight:'bold',
+    fontSize:16,
+    margin:5
+    },
+    forgot:{
+      color:'#3797FE'
+    },
+    input:{
+      borderColor:'grey',
+      width:350,
+      height:50,
+      alignSelf:'center',
+      margin:10,
+      padding: 10,
+      borderWidth: 1,
+      borderRadius: 8,
+    }, 
+    button:{
+      color:'white',
+      borderRadius: 8,
+      alignSelf:'center',
+      alignItems: 'center',
+      backgroundColor: '#3797FE',
+      padding:10,
+      margin:10,
+      width:350,
+      height:50,
+    },
+    signup:{
+     color:'#3797FE'
+    }
+})
+export default Login
+ {{{
+            handleChange,
+            handleBlur,
+            values,
+            touched,
+            errors,
+            isValid,
+          }} => {
+            return(
+             <View>
+               <InputBox
+               placeholder={'Username'}
+               onchangeText={handleChange('Username')}
+               onBlur={handleBlur('Username')}
+               value={values.Usernme}
+               touched={touched.Username}
+               errors={errors.Username}
+               />
+               <InputBox
+               placeholder={'password'}
+               onchangeText={handleChange('password')}
+               onBlur={handleBlur('password')}
+               value={values.password}
+               touched={touched.password}
+               errors={errors.password}
+               />
+                {errors && touched && <Text>{errors}</Text>}
+               <TouchableOpacity>
+                 <Text style={styles.forgot}>forgot password ?</Text>  
+                 </TouchableOpacity>   
+             </View>
+            );
+          }}
+
+
+
+
+
+
+import { Image, StyleSheet,TouchableOpacity, Text, TextInput, View } from 'react-native'
+import React from 'react'
+import { Formik } from 'formik'
+import { LoginInitialValue, LoginValidationSchema } from './utils'
+
+const Login = (onPress) => {
+  const handleLogin = () => {
+    console.log(values);
+  }
+  return (
+    <View style={styles.container}>
+      <View>
+       <Text style={styles.welcomeText}>welcome</Text>
+       <Text style={styles.Text}>sign in your account</Text>
+       <Formik 
+        initialValues={LoginInitialValue}
+        validationSchema={LoginValidationSchema}
+        onSubmit={handleLogin}>
+          {({
+            handleChange,
+            handleBlur,
+            values,
+            touched,
+            errors,
+            isValid,
+          }) => {
+            return(
+             <View style={styles.maincontainer}>
+               <TextInput
+               style={styles.input}
+               onPress={onPress}
+               placeholder={'Username'}
+               onchangeText={handleChange('Username')}
+               onBlur={handleBlur('Username')}
+               value={values.Usernme}
+               touched={touched.Username}
+               errors={errors.Username}
+               />
+               {errors.Username && touched.Username && <Text style={styles.ertext}>{errors.Username}</Text>}
+               <TextInput
+               style={styles.input}
+               onPress={onPress}
+               placeholder={'password'}
+               onchangeText={handleChange('password')}
+               onBlur={handleBlur('password')}
+               value={values.password}
+               touched={touched.password}
+               errors={errors.password}
+               />
+              {errors.password && touched.password && <Text style={styles.ertext}>{errors.password}</Text>}    
+               <TouchableOpacity>
+                  <View>
+                    <Text style={styles.signInText}>Login</Text>     
+                 </View>
+               </TouchableOpacity> 
+             <TouchableOpacity>
+                <View>
+                   <Text style={styles.forgot}>forgot password ?</Text>
+                </View>                  
+             </TouchableOpacity> 
+              <View style={styles.signupbox}>
+                 <Text>don't have an account?
+                   <TouchableOpacity>
+                     <Text style={styles.signup}> signup</Text>
+                   </TouchableOpacity>         
+                 </Text>        
+               </View>          
+             </View>             
+            );
+          }}
+        </Formik> 
+      </View>
+    </View>
+  )
+}
+const styles = StyleSheet.create({
+  card:{
+  flex:0.8,
+  justifyContent:'center',
+  },
+  container:{
+    flex:1,
+    alignItems:'center',
+  },
+  maincontainer:{
+   height:68,
+  },
+  ertext:{
+    color:'red',
+   
+  },
+  signupbox:{
+    flex:0.8,
+   alignItems:'center',
+  },
+  Text:{
+    color:'black',
+    textAlign:'center',
+    fontSize:16,
+    margin:5
+    },
+    forgot:{
+      color:'#3797FE',
+      padding:8,
+      
+    },
+    input:{
+      flex:1,
+      justifyContent:'center',
+      borderColor:'grey',
+      width:350,
+      height:50,
+      alignSelf:'center',
+      margin:10,
+      padding: 10,
+      borderWidth: 1,
+      borderRadius: 8,
+    }, 
+    welcomeText:{
+      fontSize:70,
+      textAlign:'center',
+      fontWeight:'500',
+      color:"#262626"
+  },
+  signInText:{
+    color:'white',
+    textAlign:"center",
+    fontSize:18,
+    backgroundColor:"#3797FE",
+    width:350,
+    height:50,
+    margin:10,
+    padding:10,
+    borderRadius: 8,
+   },
+    signup:{
+     color:'#3797FE',
+     alignItems:'centr',
+     justifyContent:'cene',
+    }
+})
+export default Login
