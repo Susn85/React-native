@@ -116,6 +116,19 @@ export default Login
                touched={touched.password}
                errors={errors.password}
                />
+                {/* <TouchableOpacity
+                            style={styles.hidePasswordIcon}
+                            // onPress={_onPressToggleHidePassword}
+                        >
+                            {  (
+                                <Icon name="eye-off-outline" size={20}
+                                    color="#333" />
+                            )  (
+                                    <Icon name="eye-outline" color="#318bfb"
+                                        size={20} />
+                                )
+                            }
+                        </TouchableOpacity> */}
                 {errors && touched && <Text>{errors}</Text>}
                <TouchableOpacity>
                  <Text style={styles.forgot}>forgot password ?</Text>  
@@ -220,6 +233,15 @@ const styles = StyleSheet.create({
     color:'red',
    
   },
+   hidePasswordIcon: {
+    position: 'absolute',
+    height: 30,
+    width: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: 5,
+    top: (44 - 30) / 2,
+   },
   signupbox:{
     flex:0.8,
    alignItems:'center',
@@ -271,3 +293,366 @@ const styles = StyleSheet.create({
     }
 })
 export default Login
+
+
+
+
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
+
+import React from 'react';
+import type {PropsWithChildren} from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
+
+import {
+  Colors,
+  DebugInstructions,
+  Header,
+  LearnMoreLinks,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+
+type SectionProps = PropsWithChildren<{
+  title: string;
+}>;
+
+function Section({children, title}: SectionProps): React.JSX.Element {
+  const isDarkMode = useColorScheme() === 'dark';
+  return (
+    <View style={styles.sectionContainer}>
+      <Text
+        style={[
+          styles.sectionTitle,
+          {
+            color: isDarkMode ? Colors.white : Colors.black,
+          },
+        ]}>
+        {title}
+      </Text>
+      <Text
+        style={[
+          styles.sectionDescription,
+          {
+            color: isDarkMode ? Colors.light : Colors.dark,
+          },
+        ]}>
+        {children}
+      </Text>
+    </View>
+  );
+}
+
+function App(): React.JSX.Element {
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+
+  return (
+    <SafeAreaView style={backgroundStyle}>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={backgroundStyle.backgroundColor}
+      />
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={backgroundStyle}>
+        <Header />
+        <View
+          style={{
+            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          }}>
+          <Section title="sujeet">
+            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
+            screen and then come back to see your edits.
+          </Section>
+          <Section title="name : sujeet nayak">
+            <ReloadInstructions />
+          </Section>
+          <Section title="Debug">
+            <DebugInstructions />
+          </Section>
+          <Section title="Learn More">
+            Read the docs to discover what to do next:
+          </Section>
+          <LearnMoreLinks />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+});
+
+export default App;
+
+
+import { Image, StyleSheet,TouchableOpacity, Text,onPress, TextInput, View } from 'react-native'
+import React from 'react'
+import { Formik } from 'formik'
+import { LoginInitialValue, LoginValidationSchema } from './utils'
+import { useNavigation } from '@react-navigation/native'
+import {InputBox} from './screen/Auth/InputBox'
+import {CustomButton} from './screen/Auth/CustomButton' 
+
+const Login = () => { 
+ const navigation = useNavigation();
+  const handleLogin = () => {
+    console.log(Values);
+  }
+  return (
+    <View style={{alignItems:'center'}}>
+      <Image
+      style={styles.image}
+      source={require('../../src/assets/Susan.png')}/>
+        <Formik 
+        initialValues={LoginInitialValue}
+        validationSchema={LoginValidationSchema}
+        onSubmit={handleLogin}>
+          {({
+            handleSubmit,
+            handleChange,
+            handleBlur,
+            values,
+            touched,
+            errors,
+            isValid
+          }) => {
+            return(
+              <View>
+                <TextInput
+                  style={styles.textinput}
+                  placeholder={'Username'}
+                  onchangeText={handleChange('Username')}
+                  onBlur={handleBlur('Username')}
+                  value={values.Usernme}
+                  touched={touched.Username}
+                  errors={errors.Username}
+               />
+              {errors.Username && touched.Username && <Text style={{color:'red',paddingLeft:15}}>{errors.Username}</Text>}
+                 <TextInput
+                  style={styles.textinput}
+                  placeholder={'password'}
+                   onchangeText={handleChange('password')}
+                   onBlur={handleBlur('password')}
+                   values={values.password}
+                   touched={touched.password}
+                   errors={errors.password}
+                   secureTextEntry={true}  
+               />
+             {errors.password  && touched.password && <Text style={{color:'red',paddingLeft:15}}>{errors.password}</Text>} 
+               <TouchableOpacity onPress={handleSubmit} >
+                    <Text style={styles.signInText}>Login</Text>     
+               </TouchableOpacity> 
+               <TouchableOpacity>
+                  <Text style={{color:'#3797FE'}}>forgot password?</Text>
+               </TouchableOpacity> 
+              </View>
+            )
+          }}
+        </Formik>
+           <View>
+             <Text>don't have an account ?
+              <TouchableOpacity onPress={()=>{navigation.navigate('Signup')}}>
+                <Text style={{color:'#3797FE'}}>sign up</Text>
+              </TouchableOpacity>
+             </Text>
+        </View>
+     </View>
+  )
+}
+const styles = StyleSheet.create({
+  image:{
+    margin:4,
+    width:400,
+    height: 200,
+},
+  textinput:{
+      justifyContent:'center',
+      borderColor:'grey',
+      width:350,
+      height:50,
+      alignSelf:'center',
+      margin:5,
+      padding:10,
+      borderWidth: 1,
+      borderRadius: 5,
+  },
+  signInText:{
+    color:'white',
+    textAlign:"center",
+    alignSelf:'center',
+    fontSize:18,
+    backgroundColor:"#3797FE",
+    width:350,
+    height:50,
+    margin:10,
+    padding:10,
+    borderRadius: 8,
+  },
+})
+export default Login;
+
+
+import { Image, StyleSheet,TouchableOpacity, Text, TextInput, View } from 'react-native'
+import React from 'react'
+import { Formik } from 'formik'
+import { SignupInitialValue, SignupValidationSchema } from './utils'
+import {InputBox} from './InputBox'
+import {CustomButton} from './CustomButton'
+import { useNavigation } from '@react-navigation/native'
+
+const Signup = () => {
+ const navigation = useNavigation();
+  const handleSignup = (values) => {
+    console.log(values);
+  }
+  return (
+    <View style={{alignItems:'center'}}>
+      <Text style={styles.headingTitle}>Sign up to your mobile number</Text>
+        <Formik 
+        initialValues={SignupInitialValue}
+        validationSchema={SignupValidationSchema}
+        onSubmit={handleSignup}>
+          {({
+            handleChange,
+            handleBlur,
+            values,
+            touched,
+            errors,
+            isValid,
+          }) => {
+            return(
+              <View>
+                <Text style={styles.Title}>Enter email</Text>
+                <TextInput
+                  style={styles.textinput}
+                  placeholder={'Username'}
+                  onchangeText={handleChange('Username')}
+                  onBlur={handleBlur('Username')}
+                  value={values.Username}
+                  touched={touched.Username}
+                  errors={errors.Username}
+               />
+              {errors.Username && touched.Username && <Text style={{color:'red',paddingLeft:15}}>{errors.Username}</Text>}
+              <Text style={styles.Title}>Create password</Text>
+              <TextInput
+                  style={styles.textinput}
+                  placeholder={'password'}
+                  onchangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  values={values.password}
+                  touched={touched.password}
+                  errors={errors.password}
+                  secureTextEntry={true}
+               />
+              {errors.password && touched.password && <Text style={{color:'red',paddingLeft:15}}>{errors.password}</Text>}
+              <Text style={styles.Title}>confirm password</Text>
+                 <TextInput
+                  style={styles.textinput}
+                  placeholder={'password'}
+                   onchangeText={handleChange('password')}
+                   onBlur={handleBlur('password')}
+                   values={values.password}
+                   touched={touched.password}
+                   errors={errors.password}
+                   secureTextEntry={true}
+               />
+             {errors.password && touched.password && <Text style={{color:'red',paddingLeft:15}}>{errors.password}</Text>}
+             <Text style={styles.Title}>Mobile Number</Text>
+             <TextInput
+                  style={styles.textinput}
+                  placeholder={'number'}
+                  onchangeText={handleChange('number')}
+                  onBlur={handleBlur('number')}
+                  values={values.number}
+                  touched={touched.number}
+                  errors={errors.number}
+                  keyboardType={'decimal-pad'}
+                  maxLength={10}
+               />
+              {errors.number && touched.number && <Text style={{color:'red',paddingLeft:15}}>{errors.number}</Text>} 
+               <TouchableOpacity onPress={handleSignup} >
+                    <Text style={styles.signupText}>Sign up</Text>     
+               </TouchableOpacity> 
+              </View>
+            )
+          }}
+        </Formik>
+           <View>
+             <Text>Have an account ?
+              <TouchableOpacity onPress={()=>{navigation.getBack()}}>
+                <Text style={{color:'#3797FE'}}>Sign in</Text>
+              </TouchableOpacity>
+             </Text>
+        </View>
+     </View>
+  )
+}
+const styles = StyleSheet.create({
+    headingTitle:{
+        fontSize:22,
+        fontWeight:'700',
+        margin:20,
+        height:50,
+    },
+  textinput:{
+      justifyContent:'center',
+      borderColor:'grey',
+      width:350,
+      alignSelf:'center',
+      margin:5,
+      height:50,
+      padding:10,
+      borderWidth: 1,
+      borderRadius: 5,
+  },
+  signupText:{
+    color:'white',
+    textAlign:"center",
+    alignSelf:'center',
+    fontSize:18,
+    backgroundColor:"#3797FE",
+    width:350,
+    height:50,
+    margin:10,
+    padding:10,
+    borderRadius: 8,
+  },
+  Title:{
+    fontSize:15,
+    margin:4,
+    paddingLeft:5
+  }
+})
+export default Signup;
