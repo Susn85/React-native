@@ -5,7 +5,7 @@ import { SignupInitialValue, SignupValidationSchema } from './utils';
 import { useNavigation } from '@react-navigation/native';
 
 const  Signup = () => {
-  // const navigation = useNavigation();
+   const navigation = useNavigation();
 
   const handleSignup = (values) => {
     console.log(values);
@@ -13,7 +13,7 @@ const  Signup = () => {
 
   return (
     <View style={{ alignItems: 'center' }}>
-      <Text style={styles.headingTitle}>Sign up to your mobile number</Text>
+      <Text style={styles.headingTitle}>Sign up with your mobile number</Text>
       <Formik
         initialValues={SignupInitialValue}
         validationSchema={SignupValidationSchema}
@@ -91,7 +91,7 @@ const  Signup = () => {
       </Formik>
       <View style={{ flexDirection: 'row', marginTop: 10 }}>
         <Text>Have an account? </Text>
-        <TouchableOpacity >
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={{ color: '#3797FE' }}>Sign in</Text>
         </TouchableOpacity>
       </View>

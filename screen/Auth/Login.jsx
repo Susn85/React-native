@@ -1,11 +1,13 @@
 import { Image, StyleSheet, TouchableOpacity, Text, TextInput, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { LoginInitialValue, LoginValidationSchema } from './utils';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Login = () => {
-  const navigation = useNavigation();
+ const navigation = useNavigation();
+  const [hidePassword, setHidePassword] = useState(true);
 
   const handleLogin = (values) => {
     console.log(values);
@@ -48,13 +50,23 @@ const Login = () => {
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
               value={values.password}
-              secureTextEntry={true}
+              secureTextEntry={hidePassword}
             />
             {errors.password && touched.password && (
               <Text style={{ color: 'red', paddingLeft: 15 }}>
                 {errors.password}
               </Text>
             )}
+            <TouchableOpacity
+              style={styles.hidePasswordIcon}
+              onPress={() => setHidePassword(!hidePassword)}
+            >
+              <Icon
+                name={hidePassword ? 'eye-off-outline' : 'eye-outline'}
+                size={20}
+                color={hidePassword ? '#333' : '#318bfb'}
+              />
+            </TouchableOpacity>
             <TouchableOpacity onPress={handleSubmit}>
               <Text style={styles.signInText}>Login</Text>
             </TouchableOpacity>
@@ -66,7 +78,7 @@ const Login = () => {
       </Formik>
       <View style={{ flexDirection: 'row', marginTop: 10 }}>
         <Text>Don't have an account? </Text>
-        <TouchableOpacity >
+        <TouchableOpacity  onPress={() => navigation.navigate('Signup')}>
           <Text style={{ color: '#3797FE' }}>Sign up</Text>
         </TouchableOpacity>
       </View>
@@ -106,6 +118,11 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     color: '#3797FE',
     marginTop: 5,
+  },
+  hidePasswordIcon: {
+    position: 'absolute',
+    right: 20,
+    top: 15,
   },
 });
 
