@@ -10,9 +10,11 @@ const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
 
   const handleLogin = (values) => {
-    console.log(values);
+    console.log("Login Details:");
+    console.log("Username:", values.Username);
+    console.log("Password:", values.password);
   };
-
+  
   return (
     <View style={{ alignItems: 'center' }}>
       <Image

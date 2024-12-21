@@ -5,10 +5,15 @@ import { SignupInitialValue, SignupValidationSchema } from './utils';
 import { useNavigation } from '@react-navigation/native';
 
 const  Signup = () => {
-   const navigation = useNavigation();
-  const handleSignup = (values) => {
-    console.log(values);
+ const navigation = useNavigation();
+   const handleSignup = (values) => {
+    console.log("Signup Details:");
+    console.log("Username:", values.Username);
+    console.log("Password:", values.password);
+    console.log("Confirm Password:", values.confirmPassword);
+    console.log("Mobile Number:", values.number);
   };
+  
 
   return (
     <View style={{ alignItems: 'center' }}>
