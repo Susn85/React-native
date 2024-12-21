@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from './Login';
-import Signup from './Signup';
-import Welcome from './Welcome';
+import Login from '../screen/Auth/Login';
+import Signup from '../screen/Auth/Signup';
+import Welcome from '../screen/Auth/Welcome';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,12 +19,12 @@ const StackNavigation = () => {
         <Stack.Screen
           name="Login"
           component={Login}
-          options={{ title: 'Login' }}
+          options={{ headerShown: false  }}
         />
         <Stack.Screen
           name="Signup"
           component={Signup}
-          options={{ title: 'Sign Up' }}
+          options={{headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
