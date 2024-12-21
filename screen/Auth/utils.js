@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const LoginInitialValue = {
-    User_id: '',
+    Username: '',
     password: '',
 };
 
@@ -12,7 +12,7 @@ export const LoginValidationSchema = yup.object().shape({
 
 
 export const SignupInitialValue = {
-    User_id: '',
+    Username: '',
     password: '',
     confirmPassword: '',
     number: '',

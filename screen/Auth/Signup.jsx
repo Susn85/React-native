@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 
 const  Signup = () => {
    const navigation = useNavigation();
-
   const handleSignup = (values) => {
     console.log(values);
   };
@@ -71,11 +70,11 @@ const  Signup = () => {
             <Text style={styles.Title}>Mobile Number</Text>
             <TextInput
               style={styles.textinput}
-              placeholder="Number"
+              placeholder="Mobile Number"
               onChangeText={handleChange('number')}
               onBlur={handleBlur('number')}
               value={values.number}
-              keyboardType="decimal-pad"
+              keyboardType="number-pad"
               maxLength={10}
             />
             {errors.number && touched.number && (

@@ -1,21 +1,34 @@
-import { View } from 'react-native';
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import Login from '../screen/Auth/Login';
-import Signup from '../screen/Auth/Signup';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Login from './Login';
+import Signup from './Signup';
+import Welcome from './Welcome';
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name='Signup' component={Signup} />
+      <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ title: 'Login' }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          options={{ title: 'Sign Up' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default StackNavigation;

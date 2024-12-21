@@ -815,3 +815,27 @@ export const LoginValidationSchema =yup.object().shape({
 //    .required('Mobile number is required')
 //     .matches(/^[789]\d{9}$/, 'mobile number should be start from 7,8,9'),
 // })
+
+
+
+import { View } from 'react-native';
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import Login from '../screen/Auth/Login';
+import Signup from '../screen/Auth/Signup';
+
+const Stack = createStackNavigator();
+
+const StackNavigation = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name='Login' component={Login} />
+        <Stack.Screen name='Signup' component={Signup} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default StackNavigation;
