@@ -46,6 +46,7 @@ const Login = () => {
                 {errors.Username}
               </Text>
             )}
+          <View style={{ position: 'relative' }}>
             <TextInput
               style={styles.textinput}
               placeholder="Password"
@@ -54,21 +55,22 @@ const Login = () => {
               value={values.password}
               secureTextEntry={hidePassword}
             />
-            {errors.password && touched.password && (
-              <Text style={{ color: 'red', paddingLeft: 15 }}>
-                {errors.password}
-              </Text>
-            )}
-            <TouchableOpacity
+             <TouchableOpacity
               style={styles.hidePasswordIcon}
               onPress={() => setHidePassword(!hidePassword)}
             >
               <Icon
                 name={hidePassword ? 'eye-off-outline' : 'eye-outline'}
-                size={20}
-                color={hidePassword ? '#333' : '#318bfb'}
+                size={24}
+                color={'#333'}
               />
             </TouchableOpacity>
+          </View>
+            {errors.password && touched.password && (
+              <Text style={{ color: 'red', paddingLeft: 15 }}>
+                {errors.password}
+              </Text>
+            )}
             <TouchableOpacity onPress={handleSubmit}>
               <Text style={styles.signInText}>Login</Text>
             </TouchableOpacity>

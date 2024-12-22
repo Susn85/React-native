@@ -1,11 +1,14 @@
 import { Image, StyleSheet, TouchableOpacity, Text, TextInput, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { SignupInitialValue, SignupValidationSchema } from './utils';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const  Signup = () => {
  const navigation = useNavigation();
+  const [hidePassword, setHidePassword] = useState(true);
+  const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
    const handleSignup = (values) => {
     console.log("Signup Details:");
     console.log("Username:", values.Username);
@@ -45,6 +48,7 @@ const  Signup = () => {
               </Text>
             )}
             <Text style={styles.Title}>Create password</Text>
+          <View style={{ position: 'relative' }}>
             <TextInput
               style={styles.textinput}
               placeholder="Password"
@@ -53,12 +57,23 @@ const  Signup = () => {
               value={values.password}
               secureTextEntry={true}
             />
+              <TouchableOpacity
+                style={styles.hidePasswordIcon}
+                onPress={() => setHidePassword(!hidePassword)}>
+                <Icon
+                  name={hidePassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={24}
+                  color={'#333'}
+                />
+              </TouchableOpacity>
+            </View>
             {errors.password && touched.password && (
               <Text style={{ color: 'red', paddingLeft: 15 }}>
                 {errors.password}
               </Text>
             )}
             <Text style={styles.Title}>Confirm password</Text>
+          <View style={{ position: 'relative' }}>
             <TextInput
               style={styles.textinput}
               placeholder="Confirm Password"
@@ -67,6 +82,16 @@ const  Signup = () => {
               value={values.confirmPassword}
               secureTextEntry={true}
             />
+              <TouchableOpacity
+                style={styles.hidePasswordIcon}
+                onPress={() => setHideConfirmPassword(!hideConfirmPassword)}>
+                <Icon
+                  name={hideConfirmPassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={24}
+                  color={'#333'}
+                />
+              </TouchableOpacity> 
+            </View>
             {errors.confirmPassword && touched.confirmPassword && (
               <Text style={{ color: 'red', paddingLeft: 15 }}>
                 {errors.confirmPassword}
@@ -137,6 +162,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     margin: 4,
     paddingLeft: 5,
+  },
+  hidePasswordIcon: {
+    position: 'absolute',
+    right: 20,
+    top: 15,
   },
 });
 
