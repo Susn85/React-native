@@ -112,7 +112,7 @@ const  Signup = () => {
                 {errors.number}
               </Text>
             )}
-            <TouchableOpacity onPress={handleSubmit}>
+            <TouchableOpacity onPress={() =>{[ navigation.navigate('HomeScreen'),{handleSubmit}]}}>
               <Text style={styles.signupText}>Sign up</Text>
             </TouchableOpacity>
           </View>

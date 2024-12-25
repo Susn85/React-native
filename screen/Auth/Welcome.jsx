@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const Welcome = () => {
   const navigation = useNavigation();
-
+      
   useEffect(() => {
     const timeout = setTimeout(() => {
       navigation.replace('Login');
@@ -17,7 +17,7 @@ const Welcome = () => {
     <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
       <Image
         style={styles.image}
-        source={require('../../src/assets/Susan.png')}
+        source={require('../../src/assets/Susan3.png')}
       />
     </View>
   );
@@ -25,9 +25,9 @@ const Welcome = () => {
 
 const styles = StyleSheet.create({
   image: {
-    margin: 4,
-    width: 400,
-    height: 200,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 });
 

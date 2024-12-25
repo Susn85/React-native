@@ -36,7 +36,7 @@ const Login = () => {
           <View>
             <TextInput
               style={styles.textinput}
-              placeholder="Username"
+              placeholder="Email address or Phone numbers"
               onChangeText={handleChange('Username')}
               onBlur={handleBlur('Username')}
               value={values.Username}
@@ -71,7 +71,7 @@ const Login = () => {
                 {errors.password}
               </Text>
             )}
-            <TouchableOpacity onPress={handleSubmit}>
+            <TouchableOpacity onPress={() =>{[ navigation.navigate('HomeScreen'),{handleSubmit}]}} >
               <Text style={styles.signInText}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity>
@@ -92,7 +92,6 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   image: {
-    margin: 4,
     width: 400,
     height: 200,
   },
