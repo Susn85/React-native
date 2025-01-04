@@ -15,8 +15,8 @@ const Login = () => {
     console.log("Password:", values.password);
   };
   
-  return (
-    <View style={{ alignItems: 'center' }}>
+  return (    
+    <View style={{ alignItems: 'center'}}>
       <Image
         style={styles.image}
         source={require('../../src/assets/Susan.png')}

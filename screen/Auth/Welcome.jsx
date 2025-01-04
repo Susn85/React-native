@@ -9,7 +9,7 @@ const Welcome = () => {
     const timeout = setTimeout(() => {
       navigation.replace('Login');
     }, 2000);
-
+     
     return () => clearTimeout(timeout); 
   }, [navigation]);
 
