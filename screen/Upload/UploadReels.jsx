@@ -1,14 +1,15 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity,Alert, View } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
 import { launchCamera} from 'react-native-image-picker';
 import { createThumbnail } from 'react-native-create-thumbnail';
-import { navigate } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-const UploadReels = ({ navigation }) => {
+const UploadReels = () => {
+ const navigation = useNavigation();
   const goBack = () => {
-    navigation.goBack();
+      navigation.goBack();
   };
   const handleCamera =async () => {
   await launchCamera({
