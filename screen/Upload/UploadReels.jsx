@@ -52,7 +52,7 @@ const UploadReels = () => {
            />
         </TouchableOpacity>
         <Text style={styles.title}>Upload Reels</Text>
-        <TouchableOpacity onPress={() => alert('More Information')}>
+        <TouchableOpacity onPress={() => Alert.alert('More Information')}>
          <Icon 
            name="information-outline" 
            size={30} 

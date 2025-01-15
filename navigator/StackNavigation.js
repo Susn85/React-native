@@ -7,6 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ProfileScreen from '../screen/ProfileScreen';
 import ReelsScreen from '../screen/ReelsScreen';
 import UploadScreen from '../screen/UploadScreen';
+import UploadReels from '../screen/Upload/UploadReels';
 import ChatScreen from '../screen/ChatScreen';
 import Login from '../screen/Auth/Login';
 import Signup from '../screen/Auth/Signup';
@@ -79,6 +80,11 @@ const StackNavigation = () => {
           component={TabNavigation} 
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="UploadReels"
+          component={UploadReels}
+          options={{ headerShown: false }}
+          />
       </Stack.Navigator>
     </NavigationContainer>
   );
