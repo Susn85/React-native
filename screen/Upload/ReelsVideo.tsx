@@ -1,15 +1,29 @@
-import {Alert,Linking,PermissionsAndroid,Platform,StyleSheet,Text,TouchableOpacity,View,} from 'react-native';
+import {
+  Alert,
+  FlatList,
+  Linking,
+  PermissionsAndroid,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+  Image,
+  Dimensions,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CameraRoll from '@react-native-camera-roll/camera-roll';
 
-interface VideoProp {
+interface AssetProp {
   uri: string;
-  playableDuration: number;
+  playableDuration: number | null;
+  type: string;
 }
 
 const useGallery = ({ pageSize = 30 }) => {
-  const [videos, setVideos] = useState<VideoProp[]>([]);
+  const [assets, setAssets] = useState<AssetProp[]>([]);
   const [nextCursor, setNextCursor] = useState<string | undefined>(undefined);
   const [permissionDenied, setPermissionDenied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,38 +37,42 @@ const useGallery = ({ pageSize = 30 }) => {
         PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
       ]);
       return (
-        statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGE] === PermissionsAndroid.RESULTS.GRANTED &&
-        statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] === PermissionsAndroid.RESULTS.GRANTED
+        statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGE] ===
+          PermissionsAndroid.RESULTS.GRANTED &&
+        statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] ===
+          PermissionsAndroid.RESULTS.GRANTED
       );
     } else {
-      const status = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+      const status = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
+      );
       return status === PermissionsAndroid.RESULTS.GRANTED;
     }
   };
 
-  const loadVideos = async () => {
+  const loadAssets = async () => {
     if (!hasNextPage) return;
     setIsLoadingNextPage(true);
     try {
       const { edges, page_info } = await CameraRoll.getAssets({
         first: pageSize,
         after: nextCursor,
-        assetType: 'Videos',
+        assetType: 'All', // Fetch both videos and photos
         include: ['playableDuration', 'filename', 'fileSize', 'imageSize'],
       });
-      console.log('Full Response:', JSON.stringify({ edges, page_info }, null, 2));
-   
-    
-      const videoList = edges.map(({ node }: { node: any }) => ({
+
+      const assetList = edges.map(({ node }: { node: any }) => ({
         uri: node.image.uri,
-        playableDuration: node.image.playableDuration,
+        playableDuration: node.type === 'video' ? node.image.playableDuration : null,
+        type: node.type,
       }));
-      setVideos((prev) => [...prev, ...videoList]);
+
+      setAssets((prev) => [...prev, ...assetList]);
       setNextCursor(page_info.end_cursor);
       setHasNextPage(page_info.has_next_page);
     } catch (error) {
-      console.error('Error loading videos:', error);
-      Alert.alert('Error', 'An error occurred while fetching videos.');
+      console.error('Error loading assets:', error);
+      Alert.alert('Error', 'An error occurred while fetching assets.');
     } finally {
       setIsLoadingNextPage(false);
     }
@@ -69,7 +87,7 @@ const useGallery = ({ pageSize = 30 }) => {
       }
     }
     setIsLoading(true);
-    await loadVideos();
+    await loadAssets();
     setIsLoading(false);
   };
 
@@ -78,8 +96,8 @@ const useGallery = ({ pageSize = 30 }) => {
   }, []);
 
   return {
-    videos,
-    loadVideos,
+    assets,
+    loadAssets,
     isLoading,
     permissionDenied,
     hasNextPage,
@@ -89,16 +107,40 @@ const useGallery = ({ pageSize = 30 }) => {
 
 const ReelsVideo = () => {
   const {
-    videos,
+    assets,
     isLoading,
     permissionDenied,
     hasNextPage,
     isLoadingNextPage,
-    loadVideos,
+    loadAssets,
   } = useGallery({ pageSize: 30 });
 
   const handleOpenSettings = () => {
     Linking.openSettings();
+  };
+
+  const renderItem = ({ item }: { item: AssetProp }) => {
+    return (
+      <TouchableOpacity style={styles.assetItem} onPress={() => {}}>
+        <Image source={{ uri: item.uri }} style={styles.thumbnail} />
+        {item.type === 'video' && (
+          <View style={styles.videoIcon}>
+            <Icon name="play-circle-outline" size={20} color="white" />
+          </View>
+        )}
+      </TouchableOpacity>
+    );
+  };
+
+  const renderFooter = () => {
+    if (!isLoadingNextPage) return null;
+    return <ActivityIndicator size="small" color="blue" />;
+  };
+
+  const loadNextPageAssets = ({ distanceFromEnd }: { distanceFromEnd: number }) => {
+    if (!isLoadingNextPage && hasNextPage) {
+      loadAssets();
+    }
   };
 
   return (
@@ -107,27 +149,27 @@ const ReelsVideo = () => {
         <Text style={styles.title}>Recent</Text>
         <Icon name="chevron-down" size={30} color="black" />
       </View>
-      {!permissionDenied ? (
+      {permissionDenied ? (
         <View style={styles.permissionDeniedContainer}>
-          <Text style={styles.permissionText}>We need permission to access your gallery. Grant and reopen the app.</Text>
+          <Text style={styles.permissionText}>
+            We need permission to access your gallery. Grant and reopen the app.
+          </Text>
           <TouchableOpacity style={styles.openSettingsButton} onPress={handleOpenSettings}>
             <Text style={styles.openSettingsText}>Open Settings</Text>
           </TouchableOpacity>
         </View>
       ) : isLoading ? (
-        <Text style={styles.loadingText}>Loading videos...</Text>
+        <ActivityIndicator size="large" color="red" />
       ) : (
-        <View>
-          {videos.map((video, index) => (
-            <Text key={index} style={styles.videoItem}>{`Video: ${video.uri}`}</Text>
-          ))}
-          {isLoadingNextPage && <Text style={styles.loadingText}>Loading more...</Text>}
-          {hasNextPage && (
-            <TouchableOpacity style={styles.loadMoreButton} onPress={loadVideos}>
-              <Text style={styles.loadMoreText}>Load More</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+        <FlatList
+          data={assets}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          numColumns={4}
+          onEndReached={loadNextPageAssets}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={renderFooter}
+        />
       )}
     </View>
   );
@@ -146,6 +188,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 17,
   },
+  thumbnail: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
   permissionDeniedContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -163,22 +210,19 @@ const styles = StyleSheet.create({
   openSettingsText: {
     color: '#FFFFFF',
   },
-  loadingText: {
-    textAlign: 'center',
-    marginVertical: 16,
+  assetItem: {
+    width: '25%',
+    height: Dimensions.get('window').height * 0.28,
+    overflow: 'hidden',
+    margin: 2,
   },
-  videoItem: {
-    marginBottom: 8,
-  },
-  loadMoreButton: {
-    padding: 10,
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
-    alignItems: 'center',
-    marginTop: 16,
-  },
-  loadMoreText: {
-    color: '#FFFFFF',
+  videoIcon: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 15,
+    padding: 5,
   },
 });
 
