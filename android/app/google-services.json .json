@@ -1,0 +1,12 @@
+{
+    "web":
+    {
+        "client_id":"1024477844174-dfed5plu8jbns3b4v854p7gpafu3qtdt.apps.googleusercontent.com",
+        "project_id":"susan-448013",
+        "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+        "token_uri":"https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+        "client_secret":"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",
+        "javascript_origins":["https://localhost:3000","https://localhost"]
+        }
+    }

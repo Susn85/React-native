@@ -1,26 +1,35 @@
-import { StyleSheet, Text, View,Image } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image } from 'react-native';
+import React from 'react';
 
 function FancyCard() {
   return (
-    <View>
+    <View style={styles.container}>
       <Image
-       style={styles.stretch}
-      source={require("../src/assets/Screenshot 2024-12-05 160459.png")}/>
-      <Text style={styles.headingText}>Tranding places</Text>
+        style={styles.image}
+        source={require('../src/assets/Susan3.png')}
+      />
+      <Text style={styles.text}>Trending Places</Text>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-  headingText:{
- 
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
-  stretch:{
-    width: 100,
-    height: 200,
-    resizeMode: 'stretch',
+  image: {
+  
+    width:600,
+    height: 870,
+  },
+  text: {
+    marginTop: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+});
 
-  }
-})
-export default FancyCard
+export default FancyCard;
