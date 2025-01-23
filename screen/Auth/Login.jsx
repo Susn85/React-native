@@ -5,9 +5,13 @@ import { LoginInitialValue, LoginValidationSchema } from './utils';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { SignInWithGoogle } from '../../SocialLogin';
+import { useDispatch } from 'react-redux';
+// import { login } from '../../redux/actions/authActions';
 
+const dispatch = useDispatch();
 const SocialButton = ({ children, icon }) => (
-  <TouchableOpacity style={styles.socialButton} onPress={SignInWithGoogle}>
+  <TouchableOpacity style={styles.socialButton} 
+  onPress={()=>SignInWithGoogle(useNavigation,dispatch)}>
     {icon}
     <Text style={styles.signInText}>{children}</Text>
   </TouchableOpacity>
@@ -73,7 +77,7 @@ const Login = () => {
               <Text style={styles.forgotPasswordText}>Forgot password?</Text>
             </TouchableOpacity>
             <SocialButton
-              onPress={()=>SignInWithGoogle()}
+             onPress={()=>SignInWithGoogle(useNavigation,dispatch)}
               icon={<Icon name="logo-google" size={24} color={'#333'} />}
             >
               Continue with Google
