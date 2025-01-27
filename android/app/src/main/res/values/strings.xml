@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SUSAN</string>
+    <string name="default_web_client_id">1024477844174-dfed5plu8jbns3b4v854p7gpafu3qtdt.apps.googleusercontent.com</string>
+    <integer name="google_play_services_version">12451000</integer> 
 </resources>

@@ -1,7 +1,7 @@
 import React from 'react'
 import StackNavigation from './navigator/StackNavigation'
 import {GoogleSignin} from '@react-native-google-signin/google-signin'
-import { store, persistor } from './redux/Store' 
+import store, { persistor } from './redux/Store' 
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Platform, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
