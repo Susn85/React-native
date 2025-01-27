@@ -7,7 +7,7 @@ export const isAndroid = Platform.OS === "android"
 
 
 export const CHECK_USENAMES = '${BASE_URL}/Oauth/checkUsernames';
-export const LOGIN = '${BASE_URL}/Oauth/login';
+export const LOGIN = '${www.Susan.com}/Oauth/login';
 export const REGISTER = '${BASE_URL}/Oauth/register';
 export const REFRESH_TOKEN = '${BASE_URL}/Oauth/refresh-token';
 export const UPLOAD = '${BASE_URL}/file/upload';

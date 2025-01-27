@@ -1,28 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
-import {
-    FLUSH,
-    REHYDRATE,
-    PAUSE,
-    PERSIST,
-    PURGE,
-    REGISTER,
-    persistStore,
-    persistReducer,
-} from 'redux-persist'
-// import { Storage } from 'redux-persist/lib/storage';
-import reduxStorage from './Storage';
-import rootReducer from './rootReducer';
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import rootReducer from './rootReducer' 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const persistConfig = {
     key: 'root',
-    storage: reduxStorage,
+    storage:AsyncStorage,
     blacklist: [],
     whitelist: ['user'],
-}
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = configureStore({
+ const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
@@ -30,10 +21,11 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }),
-})
+});
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
+export default store;
