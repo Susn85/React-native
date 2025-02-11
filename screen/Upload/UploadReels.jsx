@@ -5,7 +5,6 @@ import Icon2 from 'react-native-vector-icons/MaterialIcons';
 import { launchCamera } from 'react-native-image-picker';
 import { createThumbnail } from 'react-native-create-thumbnail';
 import { useNavigation } from '@react-navigation/native';
-import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 
 const UploadReels = () => {
   const navigation = useNavigation();
@@ -14,32 +13,36 @@ const UploadReels = () => {
     navigation.goBack();
   };
 
-  const handleCamera = async () => {
-    try {
-      const response = await launchCamera({
-        mediaType: 'video',
-        saveToPhotos: true,
+  const handleCamera =async () => {
+    await launchCamera({
+      mediaType: 'video',
+      formatAsMp4: true,
+      saveToPhotos: true,
+      includeExtra: true, 
+    })
+    .then(response => {
+      console.log(response);
+      createThumbnail({
+        url: response.assets[0].uri ||'',
+        timeStamp: 100,
+      })
+      .then((res) => {
+        if(res.assets && res.assets[0].uri) {
+         navigate('PostScreen',{
+
+            thumb_uri: response.path,
+            file_uri: res.assets && res.assets[0].uri,
+          });
+        }
+      })
+      .catch(err => {
+        console.log("Error", err);
       });
-
-      if (response.assets && response.assets.length > 0) {
-        const videoUri = response.assets[0].uri;
-        
-        await CameraRoll.save(videoUri, { type: 'video' });
-
-        const thumbnail = await createThumbnail({
-          url: videoUri,
-          timeStamp: 100,
-        });
-
-        navigation.navigate('ReelsVideo', {
-          thumb_uri: thumbnail.path, 
-          file_uri: videoUri,
-        });
-      }
-    } catch (error) {
-      console.error('Error recording video:', error);
-    }
-  };
+    })
+    .catch(err => {
+      console.log("Video Record", err); 
+    });
+  }
 
   return (
     <View>
