@@ -34,10 +34,12 @@ export async function prepareNavigation(){
     await navigationRef.isReady();
 }
 export type RootStackParamList = {
+    PostScreen: { thumb_uri: string; file_uri: string }; // Add PostScreen with parameters
+
 
     Welcome: undefined;
   
     Login: undefined;
   
     HomeScreen: undefined;
-};  
+};

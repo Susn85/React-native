@@ -23,12 +23,12 @@ const UploadReels = () => {
     .then(response => {
       console.log(response);
       createThumbnail({
-        url: response.assets[0].uri ||'',
+        url: res.assets[0].uri ||'',
         timeStamp: 100,
       })
-      .then((res) => {
+      .then((response) => {
         if(res.assets && res.assets[0].uri) {
-         navigate('PostScreen',{
+         navigation('PostScreen',{
 
             thumb_uri: response.path,
             file_uri: res.assets && res.assets[0].uri,

@@ -113,6 +113,7 @@ const  Signup = () => {
               </Text>
             )}
             <TouchableOpacity onPress={() =>{[ navigation.navigate('HomeScreen'),{handleSubmit}]}}>
+            {/* <TouchableOpacity onPress={handleSubmit}> */}
               <Text style={styles.signupText}>Sign up</Text>
             </TouchableOpacity>
           </View>

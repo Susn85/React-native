@@ -5,7 +5,7 @@ const storage =  new MMKV();
 
 export const token_storage = new MMKV({
     id: 'token_storage',
-    encryptionKey: 'YOUR_RSA_KEY',
+    encryptionKey: 'mySecretKey',
 });
 
 const reduxStorage :Storage = {
