@@ -7,7 +7,6 @@ import { Platform, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate} from 'redux-persist/integration/react';
 
-
 GoogleSignin.configure({
   webClientId:
    'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
